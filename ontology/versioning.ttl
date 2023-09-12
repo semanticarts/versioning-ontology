@@ -13,11 +13,11 @@
 	a owl:Ontology ;
 	owl:imports <https://w3id.org/semanticarts/ontology/operators> ;
 	owl:versionIRI <https://w3id.org/semanticarts/ontology/versioningX.x.x> ;
-	skos:definition "Generic concepts for doing semantic versioning for a suite of artifacts for semantic systems in production."^^xsd:string ;
-	skos:prefLabel "versioning"^^xsd:string ;
+	skos:definition "Generic concepts for semantic versioning of a suite of artifacts for semantic systems in production."^^xsd:string ;
+	skos:prefLabel "Semantic Versioning Ontology"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
-		ver:uniqueText "0.1.0"^^xsd:string ;
+		ver:uniqueText "X.x.x"^^xsd:string ;
 	] ;
 	.
 
@@ -52,7 +52,7 @@ ver:SemanticVersionNumber
 		owl:onProperty ver:uniqueText ;
 		owl:someValuesFrom xsd:string ;
 	] ;
-	skos:definition "A number of the form N.N.N"^^xsd:string ;
+	skos:definition "A number used to identify a version, using the semantic versioning format N.N.N."^^xsd:string ;
 	skos:prefLabel "Semantic Version Number"^^xsd:string ;
 	.
 

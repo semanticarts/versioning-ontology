@@ -37,13 +37,6 @@ skos:scopeNote
 	a owl:AnnotationProperty ;
 	.
 
-ver:Collection
-	a owl:Class ;
-	skos:definition "A grouping of things."^^xsd:string ;
-	skos:prefLabel "Collection"^^xsd:string ;
-	skos:scopeNote "Individuals are placed in the collection using the ver:hasMember property. "^^xsd:string ;
-	.
-
 ver:SemanticVersionNumber
 	a owl:Class ;
 	rdfs:seeAlso "Based on semantic versioning as described here: https://semver.org/"^^xsd:string ;
@@ -68,7 +61,7 @@ ver:VersionRangeSpec
 			]
 			[
 				a owl:Restriction ;
-				owl:onProperty ver:hasSpecifiedValue ;
+				owl:onProperty ops:hasSpecifiedValue ;
 				owl:someValuesFrom ver:SemanticVersionNumber ;
 			]
 		) ;
@@ -95,7 +88,6 @@ ver:VersionedItemCollection
 	owl:equivalentClass [
 		a owl:Class ;
 		owl:intersectionOf (
-			ver:Collection
 			[
 				a owl:Restriction ;
 				owl:onProperty ver:hasMember ;
@@ -139,7 +131,8 @@ ver:hasVersionNumber
 
 ver:isVersionRangeOf
 	a owl:ObjectProperty ;
-	skos:definition "A relationship between a VersionRangeDpec and the VersionedItem whose acceptable range is being specified."^^xsd:string ;
+	rdfs:domain ver:VersionRangeSpec ;
+	skos:definition "A relationship between a VersionRangeSpec and the VersionedItem whose acceptable range is being specified."^^xsd:string ;
 	skos:prefLabel "is version range of"^^xsd:string ;
 	.
 

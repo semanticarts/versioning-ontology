@@ -68,7 +68,7 @@ ver:VersionRangeSpec
 		) ;
 	] ;
 	skos:definition "A specification of a range of versions that a given versioned item must be within."^^xsd:string ;
-	skos:example "The version of gistCore is required to be greater or equal to 9.3.0 and less than 10.0.0"^^xsd:string ;
+	skos:example "The version of gistCore is required to be greater than or equal to 9.3.0 and less than 10.0.0"^^xsd:string ;
 	skos:prefLabel "Version Range Spec"^^xsd:string ;
 	.
 
@@ -81,7 +81,7 @@ ver:VersionedItem
 	] ;
 	skos:definition "Anything with a semantic version number."^^xsd:string ;
 	skos:prefLabel "Versioned Item"^^xsd:string ;
-	skos:scopeNote "Every VersionedItem will generally either depend on something, or something will depend on it. That kind of check is best for SHACL. It might not be an error, just a warning."^^xsd:string ;
+	skos:scopeNote "Every versioned item will generally either depend on something, or something will depend on it. That kind of check is best for SHACL. It might not be an error, just a warning."^^xsd:string ;
 	.
 
 ver:VersionedItemCollection
@@ -108,7 +108,7 @@ ver:VersionedItemCollection
 	] ;
 	skos:definition "A collection of versioned items that are versioned in synch, as if they were a single item. Version dependencies need only be specified for the collection."^^xsd:string ;
 	skos:prefLabel "Versioned Item Collection"^^xsd:string ;
-	skos:scopeNote "Although it cannot be expressed in OWL, the idea is that members inherit the version number of their collection.  This can be handled with code, if required."^^xsd:string ;
+	skos:scopeNote "Although it cannot be expressed in OWL, the idea is that members inherit the version number of their collection.  This can be handled with code or a SPARQL query if required."^^xsd:string ;
 	.
 
 ver:dependsOn
@@ -120,7 +120,7 @@ ver:dependsOn
 
 ver:hasMember
 	a owl:ObjectProperty ;
-	skos:definition "Relates a Collection to its member individuals."^^xsd:string ;
+	skos:definition "Relates a collection to its member individuals."^^xsd:string ;
 	skos:prefLabel "has member"^^xsd:string ;
 	.
 
@@ -133,7 +133,7 @@ ver:hasVersionNumber
 ver:isVersionRangeOf
 	a owl:ObjectProperty ;
 	rdfs:domain ver:VersionRangeSpec ;
-	skos:definition "A relationship between a VersionRangeSpec and the VersionedItem whose acceptable range is being specified."^^xsd:string ;
+	skos:definition "A relationship between a version range spec and the versioned item whose acceptable range is being specified."^^xsd:string ;
 	skos:prefLabel "is version range of"^^xsd:string ;
 	.
 

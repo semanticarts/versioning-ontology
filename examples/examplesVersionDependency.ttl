@@ -13,6 +13,7 @@
 
 <https://ontologies.exco.com/exeoDiseases>
 	a owl:Ontology ;
+	skos:scopeNote "The version of this ontology does not meet the dependency requirement."^^xsd:string ; 
 	skos:prefLabel "Diseases"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;

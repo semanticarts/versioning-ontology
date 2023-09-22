@@ -11,6 +11,15 @@
 @prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<https://ontologies.exco.com/exeoDiseases>
+	a owl:Ontology ;
+	skos:prefLabel "Diseases"^^xsd:string ;
+	ver:hasVersionNumber [
+		a ver:SemanticVersionNumber ;
+		ver:uniqueText "3.0.2"^^xsd:string ;
+	] ;
+	.
+
 <https://taxonomies.exco.com/diseaseTaxonomy>
 	a owl:Ontology ;
 	owl:imports
@@ -54,21 +63,12 @@
 	] ;
 	.
 
-
-<https://ontologies.exco.com/exeoDiseases>
-	a owl:Ontology ;
-	skos:prefLabel "Diseases"^^xsd:string ; 
-	ver:hasVersionNumber [
-		a ver:SemanticVersionNumber ;
-		ver:uniqueText "3.0.2"^^xsd:string ;
-	] ;
-	.
-
 <https://w3id.org/semanticarts/ontology/gistCore>
 	a owl:Ontology ;
-	skos:prefLabel "gist"^^xsd:string ; 
+	skos:prefLabel "gist"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
 		ver:uniqueText "12.2.0"^^xsd:string ;
 	] ;
 	.
+

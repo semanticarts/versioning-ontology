@@ -3,7 +3,7 @@ prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/>
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 
 # Finds all cases where a version dependency requirement is not met 
-   select distinct ?focus ?dependency (CONCAT(?requirement, '. ',?errorMessage) as ?message)
+   select distinct (?focus as ?dependent) ?dependency (CONCAT(?requirement, '. ',?errorMessage) as ?message)
    
    where {
     VALUES (?depType ?depText) { 

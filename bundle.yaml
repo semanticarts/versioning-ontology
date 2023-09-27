@@ -1,6 +1,6 @@
-bundle: gistHR
+bundle: versioning-ontology
 variables:
-  name: "gistHR"
+  name: "versioning-ontology"
   version: "X.x.x"
   input: "."
   rdf-toolkit: "{input}/tools/serializer/rdf-toolkit.jar"

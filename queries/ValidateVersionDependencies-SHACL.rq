@@ -1,0 +1,61 @@
+prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> 
+prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> 
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# Finds all cases where a version dependency requirement is not met  
+# Return result as a SHACL report
+CONSTRUCT {
+  ?report a sh:ValidationReport ;
+            sh:conforms false ;
+            sh:result [
+              a sh:ValidationResult ;
+                sh:resultSeverity sh:Violation ;
+                sh:focusNode ?focus ;
+                sh:resultPath ?depType ;
+                sh:value ?dependency ;
+                sh:resultMessage ?message ;
+                sh:sourceConstraintComponent <urn:validation:Version> ;
+            ]
+            .
+}
+where {
+  { select distinct ?focus ?depType ?dependency ?message where {
+    VALUES ?depType { 
+      ops:hasValueEqualTo 
+      ops:hasValueLessThan
+      ops:hasValueLessOrEqualTo
+      ops:hasValueGreaterThan
+      ops:hasValueGreaterOrEqualTo
+    }
+    ?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ; ?depType [ ver:uniqueText ?depValue ] ] ;
+           ver:hasVersionNumber [ ver:uniqueText ?focusVersion ]
+           .
+    ?dependency ver:hasVersionNumber [ ver:uniqueText ?dependencyVersion ] .
+    BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) as ?bn1)  
+    BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?bn2)
+    BIND(floor(?bn1*1000)+?bn2 as ?boundaryNum)
+
+    BIND(xsd:double(REPLACE(?dependencyVersion, '^([0-9]+\\.[0-9]+).*','$1')) as ?vn1)  
+    BIND(xsd:double(REPLACE(?dependencyVersion, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?vn2)
+    BIND(floor(?vn1*1000)+?vn2 as ?versionNum)
+
+    BIND(COALESCE(
+      IF(?depType=ops:hasValueEqualTo && ?boundaryNum != ?versionNum, 'not equal to', ?NoMismatch),
+      IF(?depType=ops:hasValueLessThan && ?boundaryNum <= ?versionNum, 'greater or equal to', ?NoMismatch),
+      IF(?depType=ops:hasValueLessOrEqualTo && ?boundaryNum < ?versionNum, 'greater than', ?NoMismatch),
+      IF(?depType=ops:hasValueGreaterThan && ?boundaryNum >= ?versionNum, 'less or equal to', ?NoMismatch),
+      IF(?depType=ops:hasValueGreaterOrEqualTo && ?boundaryNum > ?versionNum, 'less than', ?NoMismatch)
+    ) as ?mismatch)
+
+    FILTER(BOUND(?mismatch))
+
+    ?depType skos:prefLabel ?depTypeLabel .
+    BIND(CONCAT(
+      'Actual version ', ?dependencyVersion, ' is ', ?mismatch,
+      ' specified version ', ?depValue
+    ) as ?message)
+  }}
+  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) as ?report)
+}

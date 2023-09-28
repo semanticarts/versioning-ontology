@@ -1,0 +1,151 @@
+# imports: https://w3id.org/semanticarts/ontology/operators
+
+@prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/semanticarts/ontology/versioning>
+	a owl:Ontology ;
+	owl:imports <https://w3id.org/semanticarts/ontology/operators> ;
+	owl:versionIRI <https://w3id.org/semanticarts/ontology/versioningX.x.x> ;
+	skos:definition "Generic concepts for semantic versioning of a suite of artifacts for semantic systems in production."^^xsd:string ;
+	skos:editorialNote "Although this was originally intended for semantic version numbers, the ontology could be tweaked in a very small way to use different version numbers, so long as they are ordered."^^xsd:string ; 
+	skos:prefLabel "Semantic Versioning Ontology"^^xsd:string ;
+	ver:hasVersionNumber [
+		a ver:SemanticVersionNumber ;
+		ver:uniqueText "X.x.x"^^xsd:string ;
+	] ;
+	.
+
+skos:definition
+	a owl:AnnotationProperty ;
+	.
+
+skos:example
+	a owl:AnnotationProperty ;
+	.
+
+skos:prefLabel
+	a owl:AnnotationProperty ;
+	.
+
+skos:scopeNote
+	a owl:AnnotationProperty ;
+	.
+
+ver:SemanticVersionNumber
+	a owl:Class ;
+	rdfs:seeAlso "Based on semantic versioning as described here: https://semver.org/"^^xsd:string ;
+	rdfs:subclassOf [
+		a owl:Restriction ;
+		owl:onProperty ver:uniqueText ;
+		owl:someValuesFrom xsd:string ;
+	] ;
+	skos:definition "A number used to identify a version, using the semantic versioning format N.N.N."^^xsd:string ;
+	skos:prefLabel "Semantic Version Number"^^xsd:string ;
+	.
+
+ver:VersionRangeSpec
+	a owl:Class ;
+	owl:equivalentClass [
+		a owl:Class ;
+		owl:intersectionOf (
+			[
+				a owl:Restriction ;
+				owl:onProperty ver:isVersionRangeOf ;
+				owl:someValuesFrom ver:VersionedItem ;
+			]
+			[
+				a owl:Restriction ;
+				owl:onProperty ops:hasSpecifiedValue ;
+				owl:someValuesFrom ver:SemanticVersionNumber ;
+			]
+		) ;
+	] ;
+	skos:definition "A specification of a range of versions that a given versioned item must be within."^^xsd:string ;
+	skos:example "The version of gistCore is required to be greater than or equal to 9.3.0 and less than 10.0.0"^^xsd:string ;
+	skos:prefLabel "Version Range Spec"^^xsd:string ;
+	.
+
+ver:VersionedItem
+	a owl:Class ;
+	owl:equivalentClass [
+		a owl:Restriction ;
+		owl:onProperty ver:hasVersionNumber ;
+		owl:someValuesFrom ver:SemanticVersionNumber ;
+	] ;
+	skos:definition "Anything with a semantic version number."^^xsd:string ;
+	skos:prefLabel "Versioned Item"^^xsd:string ;
+	skos:scopeNote "Every versioned item will generally either depend on something, or something will depend on it. That kind of check is best for SHACL. It might not be an error, just a warning."^^xsd:string ;
+	.
+
+ver:VersionedItemCollection
+	a owl:Class ;
+	owl:equivalentClass [
+		a owl:Class ;
+		owl:intersectionOf (
+			[
+				a owl:Restriction ;
+				owl:onProperty ver:hasMember ;
+				owl:someValuesFrom ver:VersionedItem ;
+			]
+			[
+				a owl:Restriction ;
+				owl:onProperty ver:hasVersionNumber ;
+				owl:someValuesFrom ver:SemanticVersionNumber ;
+			]
+			[
+				a owl:Restriction ;
+				owl:onProperty ver:hasMember ;
+				owl:allValuesFrom ver:VersionedItem ;
+			]
+		) ;
+	] ;
+	skos:definition "A collection of versioned items that are versioned in synch, as if they were a single item. Version dependencies need only be specified for the collection."^^xsd:string ;
+	skos:prefLabel "Versioned Item Collection"^^xsd:string ;
+	skos:scopeNote "Although it cannot be expressed in OWL, the idea is that members inherit the version number of their collection.  This can be handled with code or a SPARQL query if required."^^xsd:string ;
+	.
+
+ver:dependsOn
+	a owl:ObjectProperty ;
+	skos:definition "Relates something to what it depends on."^^xsd:string ;
+	skos:example "A given versioned item may depend on a particular version (or range of versions) of another versioned item."^^xsd:string ;
+	skos:prefLabel "depends on"^^xsd:string ;
+	.
+
+ver:hasMember
+	a owl:ObjectProperty ;
+	skos:definition "Relates a collection to its member individuals."^^xsd:string ;
+	skos:prefLabel "has member"^^xsd:string ;
+	.
+
+ver:hasVersionNumber
+	a owl:ObjectProperty ;
+	skos:definition "Relates a versioned artifact to a text representation of its version number."^^xsd:string ;
+	skos:prefLabel "has version number"^^xsd:string ;
+	.
+
+ver:isVersionRangeOf
+	a owl:ObjectProperty ;
+	rdfs:domain ver:VersionRangeSpec ;
+	skos:definition "A relationship between a version range spec and the versioned item whose acceptable range is being specified."^^xsd:string ;
+	skos:prefLabel "is version range of"^^xsd:string ;
+	.
+
+ver:uniqueText
+	a
+		owl:DatatypeProperty ,
+		owl:FunctionalProperty
+		;
+	rdfs:range xsd:string ;
+	skos:definition "The unique string value of some content object; i.e., there is no possibility of having more than one value."^^xsd:string ;
+	skos:example "The unique string for a semantic version number is '11.1.2'."^^xsd:string ;
+	skos:prefLabel "unique text"^^xsd:string ;
+	skos:scopeNote "This is identical in meaning to gist:uniqueText in the gist ontology: https://w3id.org/semanticarts/ontology/gistCore "^^xsd:string ;
+	.
+

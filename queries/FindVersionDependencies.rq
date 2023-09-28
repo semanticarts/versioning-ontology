@@ -1,0 +1,29 @@
+prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> 
+prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> 
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# Find version dependencies
+select ?artifact ?version (group_concat(?depDesc;separator='; ') as ?dependencies) where {
+  ?artifact ver:hasVersionNumber [ ver:uniqueText ?version ] .
+  OPTIONAL {
+    ?artifact ver:dependsOn ?verRange .
+    {
+      select ?verRange ?depsimple (group_concat(?rangeExpression;separator=' & ') as ?range) {
+        ?verRange ver:isVersionRangeOf ?dep .
+        values (?prop ?shortProp) { 
+          (ops:hasValueLessThan ' < ')
+          (ops:hasValueLessOrEqualTo ' <= ')
+          (ops:hasValueGreaterThan ' > ')
+          (ops:hasValueGreaterOrEqualTo ' >= ')
+          (ops:hasValueEqualTo ' = ')
+        }
+        ?verRange ?prop [ ver:uniqueText ?depVersion ] .
+        bind(concat(?shortProp, str(?depVersion)) as ?rangeExpression)
+        bind(replace(str(?dep), '^.*[#/]', '') as ?depsimple)
+      } group by ?verRange ?depsimple
+    }
+    bind(concat(?depsimple,?range) as ?existingDepDesc)
+  }
+  bind(coalesce(?existingDepDesc, "") as ?depDesc)
+} group by ?artifact ?version

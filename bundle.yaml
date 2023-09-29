@@ -150,7 +150,7 @@ actions:
     from: "formatted_(.*)\\.ttl"
     to: "\\g<1>.ttl"
 - action: "copy"
-  message: "Copying migration queries and scripts."
+  message: "Copying examples."
   source: "{input}/examples"
   target: "{output}/examples"
 - action: "copy"

@@ -25,7 +25,7 @@
 	a owl:Ontology ;
 	owl:imports
 		<https://ontologies.exco.com/exeoDiseases> ,
-		<https://w3id.org/semanticarts/ontology/gistCore12.1.0> ,
+		<https://w3id.org/semanticarts/ontology/gistCore> ,
 		<https://w3id.org/semanticarts/ontology/operators> ,
 		<https://w3id.org/semanticarts/ontology/versioning>
 		;

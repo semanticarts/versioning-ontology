@@ -66,6 +66,7 @@
 
 <https://w3id.org/semanticarts/ontology/gistCore>
 	a owl:Ontology ;
+	owl:versionIRI <https://w3id.org/semanticarts/ontology/gistCore12.2.2> ;
 	skos:prefLabel "gist"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;

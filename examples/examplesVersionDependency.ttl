@@ -31,7 +31,7 @@
 		;
 	skos:definition "A hierarchy of diseases."^^xsd:string ;
 	skos:prefLabel "Disease Taxonomy"^^xsd:string ;
-	skos:scopeNote "The semantic version number for the disease taxonomy is 6.3.0. This version depends on the version of the disease ontology being between 3.1.0 and 4.0.0. It also depends on the version of gist core being between 12.1.0 and 13.0.0."^^xsd:string ;
+	skos:scopeNote "The semantic version number for the disease taxonomy is 6.3.0. This version depends on the version of the imported disease ontology being at least 3.1.0 and less than 4.0.0. It also depends on the version of gist core being at least 12.1.0 and less than 13.0.0."^^xsd:string ;
 	ver:dependsOn
 		[
 			a ver:VersionRangeSpec ;

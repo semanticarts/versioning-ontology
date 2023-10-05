@@ -114,7 +114,7 @@ ver:VersionedItemCollection
 ver:dependsOn
 	a owl:ObjectProperty ;
 	skos:definition "Relates something to what it depends on."^^xsd:string ;
-	skos:example "A given versioned item may depend on a particular version (or range of versions) of another versioned item."^^xsd:string ;
+	skos:example "Version 6.3.0 of a disease taxonomy depends on the version number of an imported disease ontology being at least 3.1.0 and less than 4.0.0."^^xsd:string ;
 	skos:prefLabel "depends on"^^xsd:string ;
 	.
 

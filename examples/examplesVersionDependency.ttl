@@ -1,7 +1,7 @@
 # imports: https://ontologies.exco.com/exeoDiseases
-# imports: https://w3id.org/semanticarts/ontology/gistCore
-# imports: https://w3id.org/semanticarts/ontology/operators
-# imports: https://w3id.org/semanticarts/ontology/versioning
+# imports: https://w3id.org/semanticarts/ontology/gistCore12.2.2
+# imports: https://w3id.org/semanticarts/ontology/operators1.0.0
+# imports: https://w3id.org/semanticarts/ontology/versioning1.0.0
 
 @prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -13,6 +13,7 @@
 
 <https://ontologies.exco.com/exeoDiseases>
 	a owl:Ontology ;
+	owl:versionIRI <https://ontologies.exco.com/exeoDiseases3.0.2> ;
 	skos:prefLabel "Diseases"^^xsd:string ;
 	skos:scopeNote "The version of this ontology does not meet the dependency requirement."^^xsd:string ;
 	ver:hasVersionNumber [
@@ -25,10 +26,11 @@
 	a owl:Ontology ;
 	owl:imports
 		<https://ontologies.exco.com/exeoDiseases> ,
-		<https://w3id.org/semanticarts/ontology/gistCore> ,
-		<https://w3id.org/semanticarts/ontology/operators> ,
-		<https://w3id.org/semanticarts/ontology/versioning>
+		<https://w3id.org/semanticarts/ontology/gistCore12.2.2> ,
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
 		;
+	owl:versionIRI <hhttps://taxonomies.exco.com/diseaseTaxonomy6.3.0> ;
 	skos:definition "A hierarchy of diseases."^^xsd:string ;
 	skos:prefLabel "Disease Taxonomy"^^xsd:string ;
 	ver:dependsOn

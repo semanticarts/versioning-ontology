@@ -1,4 +1,4 @@
-# imports: https://w3id.org/semanticarts/ontology/operators
+# imports: https://w3id.org/semanticarts/ontology/operators1.0.0
 
 @prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -11,10 +11,11 @@
 
 <https://w3id.org/semanticarts/ontology/versioning>
 	a owl:Ontology ;
-	owl:imports <https://w3id.org/semanticarts/ontology/operators> ;
+	owl:imports <https://w3id.org/semanticarts/ontology/operators1.0.0> ;
 	owl:versionIRI <https://w3id.org/semanticarts/ontology/versioningX.x.x> ;
 	skos:definition "Generic concepts for semantic versioning of a suite of artifacts for semantic systems in production."^^xsd:string ;
-	skos:editorialNote "Although this was originally intended for semantic version numbers, the ontology could be tweaked in a very small way to use different version numbers, so long as they are ordered."^^xsd:string ; 
+	skos:editorialNote "Although this was originally intended for semantic version numbers, the ontology could be tweaked in a very small way to use different version numbers, so long as they are ordered."^^xsd:string ;
+	skos:example "The semantic version number for the disease taxonomy is 6.3.0. This version depends on the version of the imported disease ontology being at least 3.1.0 and less than 4.0.0. It also depends on the version of gist core being at least 12.1.0 and less than 13.0.0."^^xsd:string ;
 	skos:prefLabel "Semantic Versioning Ontology"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;

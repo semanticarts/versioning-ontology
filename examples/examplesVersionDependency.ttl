@@ -13,6 +13,10 @@
 
 <https://ontologies.exco.com/exeoDiseases>
 	a owl:Ontology ;
+	owl:imports
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
+		;
 	owl:versionIRI <https://ontologies.exco.com/exeoDiseases3.0.2> ;
 	skos:prefLabel "Diseases"^^xsd:string ;
 	skos:scopeNote "The version of this ontology does not meet the dependency requirement."^^xsd:string ;
@@ -67,6 +71,10 @@
 
 <https://w3id.org/semanticarts/ontology/gistCore>
 	a owl:Ontology ;
+	owl:imports
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
+		;
 	owl:versionIRI <https://w3id.org/semanticarts/ontology/gistCore12.2.2> ;
 	skos:prefLabel "gist"^^xsd:string ;
 	ver:hasVersionNumber [

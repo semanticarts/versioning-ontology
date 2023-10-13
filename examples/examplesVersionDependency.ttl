@@ -1,7 +1,7 @@
 # imports: https://ontologies.exco.com/exeoDiseases
-# imports: https://w3id.org/semanticarts/ontology/gistCore12.1.0
-# imports: https://w3id.org/semanticarts/ontology/operators
-# imports: https://w3id.org/semanticarts/ontology/versioning
+# imports: https://w3id.org/semanticarts/ontology/gistCore12.2.2
+# imports: https://w3id.org/semanticarts/ontology/operators1.0.0
+# imports: https://w3id.org/semanticarts/ontology/versioning1.0.0
 
 @prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -13,8 +13,13 @@
 
 <https://ontologies.exco.com/exeoDiseases>
 	a owl:Ontology ;
-	skos:scopeNote "The version of this ontology does not meet the dependency requirement."^^xsd:string ; 
+	owl:imports
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
+		;
+	owl:versionIRI <https://ontologies.exco.com/exeoDiseases3.0.2> ;
 	skos:prefLabel "Diseases"^^xsd:string ;
+	skos:scopeNote "The version of this ontology does not meet the dependency requirement."^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
 		ver:uniqueText "3.0.2"^^xsd:string ;
@@ -25,13 +30,13 @@
 	a owl:Ontology ;
 	owl:imports
 		<https://ontologies.exco.com/exeoDiseases> ,
-		<https://w3id.org/semanticarts/ontology/gistCore12.1.0> ,
-		<https://w3id.org/semanticarts/ontology/operators> ,
-		<https://w3id.org/semanticarts/ontology/versioning>
+		<https://w3id.org/semanticarts/ontology/gistCore12.2.2> ,
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
 		;
+	owl:versionIRI <hhttps://taxonomies.exco.com/diseaseTaxonomy6.3.0> ;
 	skos:definition "A hierarchy of diseases."^^xsd:string ;
 	skos:prefLabel "Disease Taxonomy"^^xsd:string ;
-	skos:scopeNote "The semantic version number for the disease taxonomy is 6.3.0. This version depends on the version of the disease ontology being between 3.1.0 and 4.0.0. It also depends on the version of gist core being between 12.1.0 and 13.0.0."^^xsd:string ;
 	ver:dependsOn
 		[
 			a ver:VersionRangeSpec ;
@@ -66,10 +71,15 @@
 
 <https://w3id.org/semanticarts/ontology/gistCore>
 	a owl:Ontology ;
+	owl:imports
+		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
+		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
+		;
+	owl:versionIRI <https://w3id.org/semanticarts/ontology/gistCore12.2.2> ;
 	skos:prefLabel "gist"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
-		ver:uniqueText "12.2.0"^^xsd:string ;
+		ver:uniqueText "12.2.2"^^xsd:string ;
 	] ;
 	.
 

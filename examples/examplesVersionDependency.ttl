@@ -79,7 +79,7 @@
 	skos:prefLabel "gist"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
-		ver:uniqueText "12.2.0"^^xsd:string ;
+		ver:uniqueText "12.2.2"^^xsd:string ;
 	] ;
 	.
 

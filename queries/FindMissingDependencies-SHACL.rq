@@ -1,0 +1,43 @@
+prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/>
+prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# Finds dependencies which either missing or do not have
+# a defined semantic version
+# Return result as a SHACL report
+CONSTRUCT {
+  ?report a sh:ValidationReport ;
+            sh:conforms false ;
+            sh:result [
+              a sh:ValidationResult ;
+                sh:resultSeverity ?severity ;
+                sh:focusNode ?focus ;
+                sh:resultPath ver:dependsOn ;
+                sh:value ?dependency ;
+                sh:resultMessage ?message ;
+                sh:sourceConstraintComponent <urn:validation:Version> ;
+            ]
+            .
+}
+where {
+  {
+	?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
+    FILTER(EXISTS { ?dependency a owl:Ontology })
+    FILTER(NOT EXISTS { ?dependency ver:hasVersionNumber [] })
+    BIND(sh:Warning as ?severity)
+    OPTIONAL { ?dependency skos:prefLabel ?declaredLabel }
+    BIND(COALESCE(?declaredLabel, STR(?dependency)) as ?depLabel)
+    BIND(CONCAT('No version defined for dependency ', ?depLabel) as ?message)
+  }
+  UNION
+  {
+	?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
+    FILTER(NOT EXISTS { ?dependency a owl:Ontology })
+    BIND(sh:Violation as ?severity)
+    BIND(CONCAT('Missing dependency ', STR(?dependency)) as ?message)
+  }
+
+  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) as ?report)
+}

@@ -13,7 +13,7 @@
 
 <https://ontologies.exco.com/exeoAilments>
 	a owl:Ontology ;
-	skos:scopeNote "The version of this ontology is used to demonstrate a mismatch between owl:imports and ver:dependsOn."^^xsd:string ; 
+	skos:scopeNote "The version of this ontology is used to demonstrate a mismatch between owl:imports and ver:dependsOn."^^xsd:string ;
 	skos:prefLabel "Ailments"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
@@ -38,15 +38,15 @@
 
 <https://ontologies.exco.com/unversionedOntology>
 	a owl:Ontology ;
-	skos:scopeNote "This ontology does not declare a version."^^xsd:string ; 
+	skos:scopeNote "This ontology does not declare a version."^^xsd:string ;
 	skos:prefLabel "Unversioned Ontology"^^xsd:string ;
 	.
 
 <https://ontologies.exco.com/unconventionalVersioning>
 	a owl:Ontology ;
 	owl:versionIRI <https://ontologies.exco.com/unconventionalVersioning-RC2> ;
-	skos:scopeNote "This ontology uses a non-conventional version IRI."^^xsd:string ; 
-	skos:prefLabel "Unversioned Ontology"^^xsd:string ;
+	skos:scopeNote "This ontology uses a non-conventional version IRI."^^xsd:string ;
+	skos:prefLabel "Unconventional Versioning"^^xsd:string ;
 	.
 
 <https://taxonomies.exco.com/diseaseTaxonomy>
@@ -100,6 +100,34 @@
 				ver:uniqueText "3.0.0"^^xsd:string ;
 			] ;
 			ver:isVersionRangeOf <https://ontologies.exco.com/exeoAilments> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ops:hasValueLessThan [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "3.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/unconventionalVersioning> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/unversionedOntology> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/missingDependency> ;
 		]
 		;
 	ver:hasVersionNumber [

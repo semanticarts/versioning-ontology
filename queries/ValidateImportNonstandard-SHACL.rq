@@ -1,0 +1,39 @@
+prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/>
+prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# Finds owl:imports that are potential matches to a specified
+# versioning dependency but do not end with a standard semantic version
+# Return result as a SHACL report
+CONSTRUCT {
+  ?report a sh:ValidationReport ;
+            sh:conforms false ;
+            sh:result [
+              a sh:ValidationResult ;
+                sh:resultSeverity sh:Warning ;
+                sh:focusNode ?focus ;
+                sh:resultPath ver:dependsOn ;
+                sh:value ?dependency ;
+                sh:resultMessage ?message ;
+                sh:sourceConstraintComponent <urn:validation:Version> ;
+            ]
+            .
+}
+where {
+  { select distinct ?focus ?dependency ?message where {
+
+	?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] ;
+		   owl:imports ?dependencyVersionIRI .
+    FILTER(STRSTARTS(STR(?dependencyVersionIRI), STR(?dependency)) &&
+           ?dependencyVersionIRI != ?dependency)
+    FILTER(!REGEX(STR(?dependencyVersionIRI), '.*[0-9]+\\.[0-9]+\\.[0-9]+$'))
+
+    BIND(CONCAT(
+      'Imported ontology ', STR(?dependencyVersionIRI), ' is a close match for a declared dependency, ',
+      ' but version cannot be determined from the IRI'
+    ) as ?message)
+  }}
+  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) as ?report)
+}

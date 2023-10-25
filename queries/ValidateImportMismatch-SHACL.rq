@@ -4,7 +4,8 @@ prefix skos: <http://www.w3.org/2004/02/skos/core#>
 prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 
-# Finds all cases where a version dependency requirement is not met
+# Finds all cases where a dependency specified via owl:imports
+# conflicts with the versioning dependency definition
 # Return result as a SHACL report
 CONSTRUCT {
   ?report a sh:ValidationReport ;
@@ -29,10 +30,16 @@ WHERE {
       ops:hasValueGreaterThan
       ops:hasValueGreaterOrEqualTo
     }
+
+    # Parse <base-uri>X.x.x from owl:imports
+    ?focus owl:imports ?dependencyVersionIRI .
+    FILTER(REGEX(STR(?dependencyVersionIRI), '.*[0-9]+\\.[0-9]+\\.[0-9]+$'))
+    BIND(REPLACE(STR(?dependencyVersionIRI), '.*([0-9]+\\.[0-9]+\\.[0-9]+)$', '$1') AS ?dependencyVersion)
+    BIND(URI(REPLACE(STR(?dependencyVersionIRI), '(.*)[0-9]+\\.[0-9]+\\.[0-9]+$', '$1')) AS ?dependency)
+
     ?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ; ?depType [ ver:uniqueText ?depValue ] ] ;
            ver:hasVersionNumber [ ver:uniqueText ?focusVersion ]
            .
-    ?dependency ver:hasVersionNumber [ ver:uniqueText ?dependencyVersion ] .
     BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) AS ?bn1)
     BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) AS ?bn2)
     BIND(floor(?bn1*1000)+?bn2 AS ?boundaryNum)
@@ -52,7 +59,7 @@ WHERE {
     FILTER(BOUND(?mismatch))
 
     BIND(CONCAT(
-      'Actual version ', ?dependencyVersion, ' is ', ?mismatch,
+      'Imported version ', ?dependencyVersion, ' is ', ?mismatch,
       ' specified version ', ?depValue
     ) AS ?message)
   }}

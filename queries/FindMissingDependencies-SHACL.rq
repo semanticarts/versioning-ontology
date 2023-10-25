@@ -21,23 +21,23 @@ CONSTRUCT {
             ]
             .
 }
-where {
+WHERE {
   {
-	?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
+    ?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
     FILTER(EXISTS { ?dependency a owl:Ontology })
     FILTER(NOT EXISTS { ?dependency ver:hasVersionNumber [] })
-    BIND(sh:Warning as ?severity)
+    BIND(sh:Warning AS ?severity)
     OPTIONAL { ?dependency skos:prefLabel ?declaredLabel }
-    BIND(COALESCE(?declaredLabel, STR(?dependency)) as ?depLabel)
-    BIND(CONCAT('No version defined for dependency ', ?depLabel) as ?message)
+    BIND(COALESCE(?declaredLabel, STR(?dependency)) AS ?depLabel)
+    BIND(CONCAT('No version defined for dependency ', ?depLabel) AS ?message)
   }
   UNION
   {
-	?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
+    ?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ] .
     FILTER(NOT EXISTS { ?dependency a owl:Ontology })
-    BIND(sh:Violation as ?severity)
-    BIND(CONCAT('Missing dependency ', STR(?dependency)) as ?message)
+    BIND(sh:Violation AS ?severity)
+    BIND(CONCAT('Missing dependency ', STR(?dependency)) AS ?message)
   }
 
-  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) as ?report)
+  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) AS ?report)
 }

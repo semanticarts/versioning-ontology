@@ -21,8 +21,8 @@ CONSTRUCT {
             ]
             .
 }
-where {
-  { select distinct ?focus ?depType ?dependency ?message where {
+WHERE {
+  { SELECT DISTINCT ?focus ?depType ?dependency ?message WHERE {
     VALUES ?depType {
       ops:hasValueEqualTo
       ops:hasValueLessThan
@@ -34,19 +34,19 @@ where {
     # Parse <base-uri>X.x.x from owl:imports
     ?focus owl:imports ?dependencyVersionIRI .
     FILTER(REGEX(STR(?dependencyVersionIRI), '.*[0-9]+\\.[0-9]+\\.[0-9]+$'))
-    BIND(REPLACE(STR(?dependencyVersionIRI), '.*([0-9]+\\.[0-9]+\\.[0-9]+)$', '$1') as ?dependencyVersion)
-    BIND(URI(REPLACE(STR(?dependencyVersionIRI), '(.*)[0-9]+\\.[0-9]+\\.[0-9]+$', '$1')) as ?dependency)
+    BIND(REPLACE(STR(?dependencyVersionIRI), '.*([0-9]+\\.[0-9]+\\.[0-9]+)$', '$1') AS ?dependencyVersion)
+    BIND(URI(REPLACE(STR(?dependencyVersionIRI), '(.*)[0-9]+\\.[0-9]+\\.[0-9]+$', '$1')) AS ?dependency)
 
     ?focus ver:dependsOn [ ver:isVersionRangeOf ?dependency ; ?depType [ ver:uniqueText ?depValue ] ] ;
            ver:hasVersionNumber [ ver:uniqueText ?focusVersion ]
            .
-    BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) as ?bn1)
-    BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?bn2)
-    BIND(floor(?bn1*1000)+?bn2 as ?boundaryNum)
+    BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) AS ?bn1)
+    BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) AS ?bn2)
+    BIND(floor(?bn1*1000)+?bn2 AS ?boundaryNum)
 
-    BIND(xsd:double(REPLACE(?dependencyVersion, '^([0-9]+\\.[0-9]+).*','$1')) as ?vn1)
-    BIND(xsd:double(REPLACE(?dependencyVersion, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?vn2)
-    BIND(floor(?vn1*1000)+?vn2 as ?versionNum)
+    BIND(xsd:double(REPLACE(?dependencyVersion, '^([0-9]+\\.[0-9]+).*','$1')) AS ?vn1)
+    BIND(xsd:double(REPLACE(?dependencyVersion, '^[0-9]+\\.[0-9]+(\\.*)','$1')) AS ?vn2)
+    BIND(floor(?vn1*1000)+?vn2 AS ?versionNum)
 
     BIND(COALESCE(
       IF(?depType=ops:hasValueEqualTo && ?boundaryNum != ?versionNum, 'not equal to', ?NoMismatch),
@@ -54,14 +54,14 @@ where {
       IF(?depType=ops:hasValueLessOrEqualTo && ?boundaryNum < ?versionNum, 'greater than', ?NoMismatch),
       IF(?depType=ops:hasValueGreaterThan && ?boundaryNum >= ?versionNum, 'less or equal to', ?NoMismatch),
       IF(?depType=ops:hasValueGreaterOrEqualTo && ?boundaryNum > ?versionNum, 'less than', ?NoMismatch)
-    ) as ?mismatch)
+    ) AS ?mismatch)
 
     FILTER(BOUND(?mismatch))
 
     BIND(CONCAT(
       'Imported version ', ?dependencyVersion, ' is ', ?mismatch,
       ' specified version ', ?depValue
-    ) as ?message)
+    ) AS ?message)
   }}
-  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) as ?report)
+  BIND(URI(CONCAT('urn:validation:report:', STR(NOW()))) AS ?report)
 }

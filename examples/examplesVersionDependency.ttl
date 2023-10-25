@@ -42,11 +42,15 @@
 	skos:prefLabel "Unversioned Ontology"^^xsd:string ;
 	.
 
-<https://ontologies.exco.com/unconventionalVersioning>
+<https://ontologies.exco.com/nonStandardVersioning>
 	a owl:Ontology ;
-	owl:versionIRI <https://ontologies.exco.com/unconventionalVersioning-RC2> ;
+	owl:versionIRI <https://ontologies.exco.com/nonStandardVersioning-RC2> ;
 	skos:scopeNote "This ontology uses a non-conventional version IRI."^^xsd:string ;
 	skos:prefLabel "Unconventional Versioning"^^xsd:string ;
+	ver:hasVersionNumber [
+		a ver:SemanticVersionNumber ;
+		ver:uniqueText "2.0.0.RC2"^^xsd:string ;
+	] ;
 	.
 
 <https://taxonomies.exco.com/diseaseTaxonomy>
@@ -55,7 +59,7 @@
 		<https://ontologies.exco.com/exeoAilments1.5.0> ,
 		<https://ontologies.exco.com/exeoDiseases> ,
 		<https://ontologies.exco.com/missingDependency> ,
-		<https://ontologies.exco.com/unconventionalVersioning-RC2> ,
+		<https://ontologies.exco.com/nonStandardVersioning-RC2> ,
 		<https://ontologies.exco.com/unversionedOntology> ,
 		<https://w3id.org/semanticarts/ontology/gistCore12.2.2> ,
 		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
@@ -111,7 +115,7 @@
 				a ver:SemanticVersionNumber ;
 				ver:uniqueText "3.0.0"^^xsd:string ;
 			] ;
-			ver:isVersionRangeOf <https://ontologies.exco.com/unconventionalVersioning> ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/nonStandardVersioning> ;
 		] ,
 		[
 			a ver:VersionRangeSpec ;

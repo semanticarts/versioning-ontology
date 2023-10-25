@@ -8,4 +8,4 @@ The need for specifying such dependencies arises when ontologies use terms from 
 Several SPARQL queries are provided to perform the following tasks:
 1. Find all versioned artifacts and their dependencies.
 2. Find all cases where a version dependency requirement is not met. Return result in English.
-3. Queries validating several types of dependency conflicts, returning results as a SHACL `ValidationReport`.
+3. Validate several types of dependency conflicts, returning results as a SHACL `ValidationReport`.

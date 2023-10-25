@@ -2,10 +2,10 @@ prefix ops: <https://w3id.org/semanticarts/ns/ontology/operators/>
 prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> 
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 
-# Finds all cases where a version dependency requirement is not met 
-   select distinct (?focus as ?dependent) ?dependency (CONCAT(?requirement, '. ',?errorMessage) as ?message)
+# Finds all cases WHERE a version dependency requirement is not met 
+   SELECT DISTINCT (?focus AS ?dependent) ?dependency (CONCAT(?requirement, '. ',?errorMessage) AS ?message)
    
-   where {
+   WHERE {
     VALUES (?depType ?depText) { 
       (ops:hasValueEqualTo "=")
       (ops:hasValueLessThan "<")
@@ -17,13 +17,13 @@ PREFIX sh: <http://www.w3.org/ns/shacl#>
            ver:hasVersionNumber [ ver:uniqueText ?focusVersion ]
            .
     ?dependency ver:hasVersionNumber [ ver:uniqueText ?depVersion ] .
-    BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) as ?bn1)  
-    BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?bn2)
-    BIND(floor(?bn1*1000)+?bn2 as ?depValueNum)
+    BIND(xsd:double(REPLACE(?depValue, '^([0-9]+\\.[0-9]+).*','$1')) AS ?bn1)  
+    BIND(xsd:double(REPLACE(?depValue, '^[0-9]+\\.[0-9]+(\\.*)','$1')) AS ?bn2)
+    BIND(floor(?bn1*1000)+?bn2 AS ?depValueNum)
 
-    BIND(xsd:double(REPLACE(?depVersion, '^([0-9]+\\.[0-9]+).*','$1')) as ?vn1)  
-    BIND(xsd:double(REPLACE(?depVersion, '^[0-9]+\\.[0-9]+(\\.*)','$1')) as ?vn2)
-    BIND(floor(?vn1*1000)+?vn2 as ?depVersionNum)
+    BIND(xsd:double(REPLACE(?depVersion, '^([0-9]+\\.[0-9]+).*','$1')) AS ?vn1)  
+    BIND(xsd:double(REPLACE(?depVersion, '^[0-9]+\\.[0-9]+(\\.*)','$1')) AS ?vn2)
+    BIND(floor(?vn1*1000)+?vn2 AS ?depVersionNum)
 
     BIND(COALESCE(
       IF(?depType=ops:hasValueEqualTo && ?depValueNum != ?depVersionNum, 'not equal to', ?NoMismatch),
@@ -31,18 +31,18 @@ PREFIX sh: <http://www.w3.org/ns/shacl#>
       IF(?depType=ops:hasValueLessOrEqualTo && ?depValueNum < ?depVersionNum, 'greater than', ?NoMismatch),
       IF(?depType=ops:hasValueGreaterThan && ?depValueNum >= ?depVersionNum, 'less or equal to', ?NoMismatch),
       IF(?depType=ops:hasValueGreaterOrEqualTo && ?depValueNum > ?depVersionNum, 'less than', ?NoMismatch)
-    ) as ?mismatch)
+    ) AS ?mismatch)
 
     FILTER(BOUND(?mismatch))
 
     BIND(CONCAT(
       'The actual version ', ?depVersion, ', is ', ?mismatch,
       ' the specified version ', ?depValue
-    ) as ?errorMessage)
+    ) AS ?errorMessage)
 
     ?focus skos:prefLabel ?focusLabel .
     ?dependency skos:prefLabel ?dependencyLabel .
-        BIND(CONCAT('Version ', ?focusVersion, ' of ', ?focusLabel, ' requires the version of ', ?dependencyLabel, ' to be ', ?depText, ' ', ?depValue) as ?requirement)
+        BIND(CONCAT('Version ', ?focusVersion, ' of ', ?focusLabel, ' requires the version of ', ?dependencyLabel, ' to be ', ?depText, ' ', ?depValue) AS ?requirement)
 
   } order by ?focus 
   

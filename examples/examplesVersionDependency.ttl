@@ -45,8 +45,8 @@
 <https://ontologies.exco.com/nonStandardVersioning>
 	a owl:Ontology ;
 	owl:versionIRI <https://ontologies.exco.com/nonStandardVersioning-RC2> ;
-	skos:scopeNote "This ontology uses a non-conventional version IRI."^^xsd:string ;
-	skos:prefLabel "Unconventional Versioning"^^xsd:string ;
+	skos:scopeNote "This ontology uses a non-standard version IRI."^^xsd:string ;
+	skos:prefLabel "Non-Standard Versioning"^^xsd:string ;
 	ver:hasVersionNumber [
 		a ver:SemanticVersionNumber ;
 		ver:uniqueText "2.0.0.RC2"^^xsd:string ;

@@ -11,6 +11,16 @@
 @prefix ver: <https://w3id.org/semanticarts/ns/ontology/versioning/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<https://ontologies.exco.com/exeoAilments>
+	a owl:Ontology ;
+	skos:scopeNote "The version of this ontology is used to demonstrate a mismatch between owl:imports and ver:dependsOn."^^xsd:string ;
+	skos:prefLabel "Ailments"^^xsd:string ;
+	ver:hasVersionNumber [
+		a ver:SemanticVersionNumber ;
+		ver:uniqueText "2.1.2"^^xsd:string ;
+	] ;
+	.
+
 <https://ontologies.exco.com/exeoDiseases>
 	a owl:Ontology ;
 	owl:imports
@@ -26,10 +36,31 @@
 	] ;
 	.
 
+<https://ontologies.exco.com/unversionedOntology>
+	a owl:Ontology ;
+	skos:scopeNote "This ontology does not declare a version."^^xsd:string ;
+	skos:prefLabel "Unversioned Ontology"^^xsd:string ;
+	.
+
+<https://ontologies.exco.com/nonStandardVersioning>
+	a owl:Ontology ;
+	owl:versionIRI <https://ontologies.exco.com/nonStandardVersioning-RC2> ;
+	skos:scopeNote "This ontology uses a non-standard version IRI."^^xsd:string ;
+	skos:prefLabel "Non-Standard Versioning"^^xsd:string ;
+	ver:hasVersionNumber [
+		a ver:SemanticVersionNumber ;
+		ver:uniqueText "2.0.0.RC2"^^xsd:string ;
+	] ;
+	.
+
 <https://taxonomies.exco.com/diseaseTaxonomy>
 	a owl:Ontology ;
 	owl:imports
+		<https://ontologies.exco.com/exeoAilments1.5.0> ,
 		<https://ontologies.exco.com/exeoDiseases> ,
+		<https://ontologies.exco.com/missingDependency> ,
+		<https://ontologies.exco.com/nonStandardVersioning-RC2> ,
+		<https://ontologies.exco.com/unversionedOntology> ,
 		<https://w3id.org/semanticarts/ontology/gistCore12.2.2> ,
 		<https://w3id.org/semanticarts/ontology/operators1.0.0> ,
 		<https://w3id.org/semanticarts/ontology/versioning1.0.0>
@@ -61,6 +92,46 @@
 				ver:uniqueText "4.0.0"^^xsd:string ;
 			] ;
 			ver:isVersionRangeOf <https://ontologies.exco.com/exeoDiseases> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "2.0.0"^^xsd:string ;
+			] ;
+			ops:hasValueLessThan [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "3.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/exeoAilments> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ops:hasValueLessThan [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "3.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/nonStandardVersioning> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/unversionedOntology> ;
+		] ,
+		[
+			a ver:VersionRangeSpec ;
+			ops:hasValueGreaterOrEqualTo [
+				a ver:SemanticVersionNumber ;
+				ver:uniqueText "1.0.0"^^xsd:string ;
+			] ;
+			ver:isVersionRangeOf <https://ontologies.exco.com/missingDependency> ;
 		]
 		;
 	ver:hasVersionNumber [

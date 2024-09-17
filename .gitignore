@@ -1,6 +1,5 @@
 *.~vsd*
-*_webDownload/
+*_release/
 .DS_Store
 *.orig
 catalog-v001.xml
-*.jar

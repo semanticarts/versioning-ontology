@@ -132,4 +132,3 @@ actions:
     to: "\\g<1>.jsonld"
   includes:
     - "*.ttl"
-    

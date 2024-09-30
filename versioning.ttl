@@ -11,7 +11,7 @@
 
 <https://w3id.org/semanticarts/ontology/versioning>
 	a owl:Ontology ;
-	owl:imports <https://w3id.org/semanticarts/ontology/operators1.0.0> ;
+	owl:imports <https://w3id.org/semanticarts/ontology/operators1.1.0> ;
 	owl:versionIRI <https://w3id.org/semanticarts/ontology/versioningX.x.x> ;
 	skos:definition "Generic concepts for semantic versioning of a suite of artifacts for semantic systems in production."^^xsd:string ;
 	skos:editorialNote "Although this was originally intended for semantic version numbers, the ontology could be tweaked in a very small way to use different version numbers, so long as they are ordered."^^xsd:string ;
@@ -149,4 +149,3 @@ ver:uniqueText
 	skos:prefLabel "unique text"^^xsd:string ;
 	skos:scopeNote "This is identical in meaning to gist:uniqueText in the gist ontology: https://w3id.org/semanticarts/ontology/gistCore "^^xsd:string ;
 	.
-
